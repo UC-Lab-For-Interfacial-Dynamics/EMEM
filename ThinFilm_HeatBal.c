@@ -1,28 +1,30 @@
 /*  
 ThinFilmMassSource_HB UDF
 
-    This UDF computes the heat generated/lost by the thin film to add as a 
-    source term to the ANSYS Fluent Simulation
+    This User Defined Function (UDF) computes the heat source term for the computed thin film solution.
+        - In most use cases, this code need not be edited.
 
-    Developed By: Saaras Pakanati, Ayaaz Yasin - 2025
-
+    Developed By: Saaras Pakanati, Ayaaz Yasin, and Kishan Bellur - October 2025
     At The University of Cincinnati Lab for Interfacial Dynamics
     
 
 
     
-    Inputs******************Description*********************************************format
+    Property****************Description*****************************************************units
 
     DEFINE_SOURCE Function
-    --------------------------------------------------------------------------------------
-    lengthT                 Number of data points the thin film int. temp. provides double
+    -----------------------------------------------------------------------------------------------
+    lengthT                 Number of data points the thin film int. temp. provides         #
 */
 
 #include <udf.h>
 #include <math.h>
 #include <stdio.h>
 
+// Read global variable for mass source term from ThinFilm_MassSource code.
 extern double Sm_Global;
+
+// Initialize gloabal variable for heat source term.
 double Q_Global;
 
 // DEFINE_SOURCE FUNCTION
@@ -125,8 +127,8 @@ DEFINE_SOURCE(ThinFilmMassSource_HB,c,t,dS,eqn)
             
 
             // Calculating Heat Loss/Gain.
-            double cp = C_CP(c,t);                      // [J/kg-K] Specific Heat.
-            double TV = C_T(c,t);			            // [K] Vapor Temperature.
+            double cp    = C_CP(c,t);                   // [J/kg-K] Specific Heat.
+            double TV    = C_T(c,t);			        // [K] Vapor Temperature.
             double TVsat = Ti_avg; 				        // [K] Vapor Saturation Temperature.
             
             if (Sm < 0.0) {
@@ -135,7 +137,7 @@ DEFINE_SOURCE(ThinFilmMassSource_HB,c,t,dS,eqn)
                 Q = (-Sm * cp * (298.15 - TVsat));      // for zero or positive evaporation rate
             }
 
-            // Save the heat energy for future iterations.
+            // Save the heat source term for future iterations.
             Q_Global = Q;
 
             // Save Computed Curve Fit Coefficient Values and Mass Source Term to external file
@@ -149,6 +151,7 @@ DEFINE_SOURCE(ThinFilmMassSource_HB,c,t,dS,eqn)
             Q = Q_Global;
         }
     } else if (iter == 1) {
+        // Initialize heat source term for the first 100 iterations.
         Q_Global = 0;
         Q = Q_Global;
     } else {
