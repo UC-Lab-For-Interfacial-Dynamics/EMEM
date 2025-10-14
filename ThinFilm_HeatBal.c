@@ -1,20 +1,30 @@
 /*  
-ThinFilmMassSource_HB UDF
+ThinFilm_HeatBal.c
 
     This User Defined Function (UDF) computes the heat source term for the computed thin film solution.
         - In most use cases, this code need not be edited.
 
     Developed By: Saaras Pakanati, Ayaaz Yasin, and Kishan Bellur - October 2025
     At The University of Cincinnati Lab for Interfacial Dynamics
-    
 
+----------------------------------------------------------------------------------------------------
 
+    General Instructions:
+
+        (1) This code should rarely be edited as nearly all value are obtained from the 
+            thinFilm_MassSource UDF or the domain itself.
+
+----------------------------------------------------------------------------------------------------
     
     Property****************Description*****************************************************units
 
     DEFINE_SOURCE Function
     -----------------------------------------------------------------------------------------------
     lengthT                 Number of data points the thin film int. temp. provides         #
+
+
+----------------------------------------------------------------------------------------------------
+
 */
 
 #include <udf.h>
@@ -110,17 +120,17 @@ DEFINE_SOURCE(ThinFilmMassSource_HB,c,t,dS,eqn)
 
             i = 0;
             while (i < lengthT){
-                yMadd[i] = Ti_data[i][2];  // Extract the Interface Temperatures
-                Mcount = Mcount + yMadd[i];
-                i = i + 1;                 // increment
+                yMadd[i]    = Ti_data[i][2];    // Extract the Interface Temperatures
+                Mcount      = Mcount + yMadd[i];
+                i = i + 1;                      // increment
             }
 
             i = 0;
             while (i < lengthT){
-                yT[i] = Ti_data[i][1];   // Extract the Interface Temperatures
-                yM[i] = Ti_data[i][2];   // Extract the Interface Temperatures
-                Tcount = Tcount + ((yT[i] * yM[i]) / Mcount);
-                i = i + 1;               // increment
+                yT[i]   = Ti_data[i][1];                            // Extract the Interface Temperatures
+                yM[i]   = Ti_data[i][2];                            // Extract the Interface Temperatures
+                Tcount  = Tcount + ((yT[i] * yM[i]) / Mcount);
+                i = i + 1;                                          // increment
             }
             double Ti_avg = Tcount;
 

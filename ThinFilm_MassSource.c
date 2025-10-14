@@ -1,13 +1,47 @@
 /*  
-ThinFilmMassSource.c
+ThinFilm_MassSource.c
 
     This User Defined Function (UDF) computes the mass source term for the computed thin film solution.
 
     Developed By: Saaras Pakanati, Ayaaz Yasin, and Kishan Bellur - October 2025
     At The University of Cincinnati Lab for Interfacial Dynamics
 
+----------------------------------------------------------------------------------------------------
 
+    General Instructions:
 
+        (1) Thermo-Physical properties are curve fit for H2 from 15K-35K.
+            - Change curvefits, if not appropriate to use case.
+
+        (2) Refer to the properties mentioned below and make the appropriate changes.
+        
+        (3) Kinetic Theory of Gases Model
+            - Choose the appropriate model by uncommenting the code in the preCondition function.
+              [Default - Wayner's model]
+
+            - Available Models:
+                1. Wayner's KTG model
+                      Wayner, P.; Kao, Y.; LaCroix, L. The Interline Heat-Transfer Coefficient of an 
+                      Evaporating Wetting Film. International Journal of Heat and Mass Transfer 1976, 
+                      19, 487–492. https://doi.org/10.1016/0017-9310(76)90161-7. 
+                2. Bellur's KTG model
+                      Bellur, K.; Médici, E.F.; Hermanson, J.C.; Choi, C.K.; Allen, J.S. Modeling 
+                      Liquid–Vapor Phase Change Experiments: Cryogenic Hydrogen and Methane. Colloids 
+                      and Surfaces A: Physicochemical and Engineering Aspects 2023, 131932. 
+                      https://doi.org/10.1016/j.colsurfa.2023.131932.
+
+        (4) Adsorbed film stopping conditions.
+            - The framework to terminate the thin film solution to a non-evaporating flat film exists
+              for the conditions laid out below. Refer to the thinFilmSolve function for more information.
+                    1. Adsorbed film height reaches a certain value.
+                    2. Adsorbed film height's first derivative becomes zero.
+                    3. Adsorbed film height's second derivative becomes zero.
+                    4. Mass flux becomes zero.
+
+                    [Default - Zero Mass flux]
+
+----------------------------------------------------------------------------------------------------
+    Description of Properties:
     
     Property****************Description*****************************************************units
 
@@ -53,6 +87,8 @@ ThinFilmMassSource.c
     length                  Number of cells the wall temperature UDF provides               #
     Tv_main                 Saturation Temperature                                          K
     gammaTv                 Gamma Formulation for Knudsen Layer Reduction                   -
+
+----------------------------------------------------------------------------------------------------
 
 */
 
@@ -290,6 +326,7 @@ double thinFilmSolve(double A, double B, double vol, int iter, double Tv_main, d
     for (int  j = 0; j < n; j++) {
         
         // Check for zero mass flux stopping condition to define the adsorbed region.
+        // Can change to "if (H_check[0] > 1e-10) {" to terminate the solution at a specific height (in example 1e-10 m).
         if (mFlux > 1e-5) {
             // Initializer Step
             derivativeFunction(dx, H[0], H[1], H[2], 0.0, A, B, x, iter, Tv_main, gammaTv, &Hppp, &T_lastEv, &M_lastEv, &mFlux);
