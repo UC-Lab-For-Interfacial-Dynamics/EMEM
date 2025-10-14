@@ -11,17 +11,31 @@ The development of this model is motivated by the multiscale nature of the menis
 The code provided here is set up to simulate the extended meniscus of liquid Hydrogen in a 10 mm cylindrical container for validation with the experimental test case.
 
 ## References
-See associated paper for details:
-    (1) MDPI fuels
-    (2) Yasin, A.; Bellur, K. Computational Modeling of Evaporation without Tuning Coefficients. Applied Thermal Engineering 2025, 276, 126807. https://doi.org/10.1016/j.applthermaleng.2025.126807.
-    (3) Bellur, K.; Médici, E. F.; Hermanson, J. C.; Choi, C. K.; Allen, J. S. Modeling Liquid–Vapor Phase Change Experiments: Cryogenic Hydrogen and Methane. Colloids and Surfaces A: Physicochemical and Engineering Aspects 2023, 675, 131932. https://doi.org/10.1016/j.colsurfa.2023.131932.
-    (4) Bellur, K.; Médici, E. F.; Hussey, D. S.; Jacobson, D. L.; LaManna, J.; Leão, J. B.; Scherschligt, J.; Hermanson, J. C.; Choi, C. K.; Allen, J. S. Results from Neutron Imaging Phase Change Experiments with LH2 and LCH4. Cryogenics 2022, 125, 103517. https://doi.org/10.1016/j.cryogenics.2022.103517.
+See associated paper for details: <br/>
+    (1) MDPI fuels <br/>
+    (2) Yasin, A.; Bellur, K. Computational Modeling of Evaporation without Tuning Coefficients. Applied Thermal Engineering 2025, 276, 126807. https://doi.org/10.1016/j.applthermaleng.2025.126807. <br/>
+    (3) Bellur, K.; Médici, E. F.; Hermanson, J. C.; Choi, C. K.; Allen, J. S. Modeling Liquid–Vapor Phase Change Experiments: Cryogenic Hydrogen and Methane. Colloids and Surfaces A: Physicochemical and Engineering Aspects 2023, 675, 131932. https://doi.org/10.1016/j.colsurfa.2023.131932. <br/>
+    (4) Bellur, K.; Médici, E. F.; Hussey, D. S.; Jacobson, D. L.; LaManna, J.; Leão, J. B.; Scherschligt, J.; Hermanson, J. C.; Choi, C. K.; Allen, J. S. Results from Neutron Imaging Phase Change Experiments with LH2 and LCH4. Cryogenics 2022, 125, 103517. https://doi.org/10.1016/j.cryogenics.2022.103517. <br/>
 
 
 ## Repository Contents
 
+
 ## Requirements
+	(1) Ansys Workbench 2023 R2 (and higher)
+	(2) Built-in C compiler (Clang)
 
 ## Usage Instructions
+	(1) Open *ThinFilm_MassSource.c* on an editor. (Preferably Microsoft Visual Studio Code).
+	(2) Follow the instructions laid out in the header of *ThinFilm_MassSource.c*.
+	(3) *ThinFilm_HeatBal.c* need not be edited.
+	(4) Open the folder in which the Ansys Workbench file exists.
+		In projectName\projectName_files\dp0\FLU\Fluent, create a folder [named libudf]
+	(5) Add *ThinFilm_MassSource.c* and  *ThinFilm_HeatBal.c* to libudf folder.
+	(6) Open Ansys Workbench -> Fluent -> User-Defined -> functions -> compiled -> add [Select the two codes mentioned above]
+	(7) On the Compiled UDFs window, select build, and then load.
+	(8) Add the compiled UDFs to the appropriate separated  cell zones.
+	(9) Run the model!
+
 
 ## Citation and License
