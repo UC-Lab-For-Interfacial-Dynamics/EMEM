@@ -64,7 +64,7 @@ ThinFilm_MassSource.c
     M                       Molar Mass                                                      g/mol
     mB                      Molecular Mass                                                  g
 
-    derivativeFunction Function
+    evolution Function
     -----------------------------------------------------------------------------------------------
     R                       Radius                                                          m
     HaC                     Hamacker Constant                                               -
@@ -234,9 +234,9 @@ double preCondition(double A, double B, double x, int iter, double h, double h1,
 
 
 
-// derivativeFunction FUNCTION
+// evolution FUNCTION
 //      Computes the h''' value [Solving the Evolution Equation].
-double derivativeFunction(double dx, double h, double h1, double h2, double k, double A, double B, double x, int iter, double Tv_main, double gammaTv, double *Hppp, double *T_lastEv, double *M_lastEv, double *mFlux) 
+double evolution(double dx, double h, double h1, double h2, double k, double A, double B, double x, int iter, double Tv_main, double gammaTv, double *Hppp, double *T_lastEv, double *M_lastEv, double *mFlux) 
 {
     
     // Initializing and Computing the Interfacial Temperature and Mass Flux.
@@ -329,28 +329,28 @@ double thinFilmSolve(double A, double B, double vol, int iter, double Tv_main, d
         // Can change to "if (H_check[0] > 1e-10) {" to terminate the solution at a specific height (in example 1e-10 m).
         if (mFlux > 1e-5) {
             // Initializer Step
-            derivativeFunction(dx, H[0], H[1], H[2], 0.0, A, B, x, iter, Tv_main, gammaTv, &Hppp, &T_lastEv, &M_lastEv, &mFlux);
+            evolution(dx, H[0], H[1], H[2], 0.0, A, B, x, iter, Tv_main, gammaTv, &Hppp, &T_lastEv, &M_lastEv, &mFlux);
             T_lastEv = Ti_last;
             M_lastEv = M_last;
             double k1[] = {H[1], H[2], Hppp};
 
             // Predictor Step
             double H1[] = {H[0] + 0.5*dx*k1[0], H[1] + 0.5*dx*k1[1], H[2] + 0.5*dx*k1[2]};
-            derivativeFunction(dx, H[0], H[1], H[2], 0.0, A, B, x+(dx/2), iter, Tv_main, gammaTv, &Hppp, &T_lastEv, &M_lastEv, &mFlux);
+            evolution(dx, H[0], H[1], H[2], 0.0, A, B, x+(dx/2), iter, Tv_main, gammaTv, &Hppp, &T_lastEv, &M_lastEv, &mFlux);
             T_lastEv = Ti_last;
             M_lastEv = M_last;
             double k2[] = {H1[1], H1[2], Hppp};
 
             // Corrector Step
             double H2[] = {H[0] + 0.5*dx*k2[0], H[1] + 0.5*dx*k2[1], H[2] + 0.5*dx*k2[2]};
-            derivativeFunction(dx, H[0], H[1], H[2], 0.0, A, B, x+(dx/2), iter, Tv_main, gammaTv, &Hppp, &T_lastEv, &M_lastEv, &mFlux);
+            evolution(dx, H[0], H[1], H[2], 0.0, A, B, x+(dx/2), iter, Tv_main, gammaTv, &Hppp, &T_lastEv, &M_lastEv, &mFlux);
             T_lastEv = Ti_last;
             M_lastEv = M_last;
             double k3[] = {H2[1], H2[2], Hppp};
 
             // Extrapolation Step
             double H3[] = {H[0] + dx*k3[0], H[1] + dx*k3[1], H[2] + dx*k3[2]};
-            derivativeFunction(dx, H[0], H[1], H[2], 0.0, A, B, x+dx, iter, Tv_main, gammaTv, &Hppp, &T_lastEv, &M_lastEv, &mFlux);
+            evolution(dx, H[0], H[1], H[2], 0.0, A, B, x+dx, iter, Tv_main, gammaTv, &Hppp, &T_lastEv, &M_lastEv, &mFlux);
             double k4[] = {H3[1], H3[2], Hppp};
 
             // Obtaining the H values.
