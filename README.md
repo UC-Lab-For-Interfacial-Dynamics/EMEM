@@ -38,6 +38,9 @@ See associated paper for details: <br/>
 4. Hook up the UDFs to the *cutoff* vapor mesh cell (see Ref[1]).
 5. Execute the simulation. 
 
+## Test Case
+tc4.cas.h5 is an Ansys Fluent case file for test cell 4 run 1. To use this case file, open it directly in Ansys Fluent.
+
 ## Citation and License
 EMEM is open-sourced under the [MIT License]([url](https://github.com/UC-Lab-For-Interfacial-Dynamics/EMEM/blob/main/LICENSE)).
 Please cite our main paper (Ref. [1]) if you use EMEM in your work.
@@ -45,3 +48,4 @@ Please cite our main paper (Ref. [1]) if you use EMEM in your work.
 ## Development
 Please report bugs to Ayaaz Yasin ([yasinaz@mail.uc.edu](mailto:yasinaz@mail.uc.edu)).<br/>
 Forthcoming updates: code for the non-tuning bulk meniscus evaporation model.
+
