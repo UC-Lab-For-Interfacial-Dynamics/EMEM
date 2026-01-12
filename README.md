@@ -17,7 +17,7 @@ The code provided here is set up to simulate the extended meniscus of liquid Hyd
 
 ## References
 See associated paper for details: <br/>
-    [1] Yasin, A.; Pakanati, S.; Bellur, K. A multiscale CFD model of evaporating Hydrogen menisci: Incorporating subgrid thin-film dynamics and in situ accommodation coefficients. Fuels [Under Review]<br/><br/>
+    [1] Yasin, A.; Pakanati, S.; Bellur, K. A multiscale CFD model of evaporating Hydrogen menisci: Incorporating subgrid thin-film dynamics and in situ accommodation coefficients. Fuels 2026, 7(1), 3. https://doi.org/10.3390/fuels7010003<br/><br/>
     [2] Yasin, A.; Bellur, K. Computational Modeling of Evaporation without Tuning Coefficients. Applied Thermal Engineering 2025, 276, 126807. https://doi.org/10.1016/j.applthermaleng.2025.126807.<br/><br/>
     [3] Bellur, K.; Médici, E. F.; Hermanson, J. C.; Choi, C. K.; Allen, J. S. Modeling Liquid–Vapor Phase Change Experiments: Cryogenic Hydrogen and Methane. Colloids and Surfaces A: Physicochemical and Engineering Aspects 2023, 675, 131932. https://doi.org/10.1016/j.colsurfa.2023.131932. <br/><br/>
     [4] Bellur, K.; Médici, E. F.; Hussey, D. S.; Jacobson, D. L.; LaManna, J.; Leão, J. B.; Scherschligt, J.; Hermanson, J. C.; Choi, C. K.; Allen, J. S. Results from Neutron Imaging Phase Change Experiments with LH2 and LCH4. Cryogenics 2022, 125, 103517. https://doi.org/10.1016/j.cryogenics.2022.103517. <br/><br/>
@@ -45,5 +45,6 @@ Please cite our main paper (Ref. [1]) if you use EMEM in your work.
 ## Development
 Please report bugs to Ayaaz Yasin ([yasinaz@mail.uc.edu](mailto:yasinaz@mail.uc.edu)).<br/>
 Forthcoming updates: code for the non-tuning bulk meniscus evaporation model.
+
 
 
